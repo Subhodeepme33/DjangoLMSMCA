@@ -1,0 +1,4 @@
+function abc(){
+	event.preventDefault();
+}
+

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block content %}
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+
+
+
+<!-- Image Upload Modal -->
+<div class="modal fade" id="imageupload" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose an image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/uploadprofilepic" enctype="multipart/form-data">
+      	 {% csrf_token %}
+	      <div class="modal-body">
+		       <div class="input-group">
+				  <div class="custom-file">
+				    <input type="file" name="image">
+				   </div>
+				  
+				</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" name="imgupload" class="btn btn-primary">Upload</button></a>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--Page Content -->
+
+<div class="container col-md-12 mt-5">
+  
+  <div class="row">
+	    <div class="col-lg-5" id="list">
+
+
+	      		<ul class="list-group col-md-6 mr-3 " style="text-decoration: none; width: 100%" >
+	      			<li class="list-group-item active">
+
+	      				{% for x in data %}
+	      				
+	      			   <span>
+
+	      				<img src="{% static 'images/default.jpg' %}" alt="" style="border-radius: 50%; width:50px"class="img-thumbnail"> 
+	      				
+	      				{% endfor %}
+	      				<a href="/uploadprofilepic">
+	      				<i class="fas fa-camera" style="background-color: white;" data-toggle="modal" data-target="#imageupload" onclick="abc();"></i>
+	      				</a>
+	      				 Welcome,{{request.session.user}}
+	      				</span>
+
+	      		
+	      			</li>
+				  <a href="#t"><li class="list-group-item">
+				  	<i class="far fa-id-badge"></i> My Profile</li>
+				 	<a>
+				  <a href="#"><li class="list-group-item">
+				  <i class="fas fa-search"></i> Browse Courses</li></a>
+
+				  <a href="#"><li class="list-group-item">
+				 <i class="fas fa-clipboard-check"></i> Completed courses</li></a>
+
+				  <a href="#"><li class="list-group-item">
+				  <i class="fab fa-servicestack"></i> Services</li></a>
+
+				  <a href="/logout"><li class="list-group-item">
+				  <i class="fas fa-sign-out-alt"></i> Logout</li></a>
+				</ul>
+	  	</div>
+	  
+	  	<div class="col-md-4">
+
+	       	<div class="row ">
+	  			<div class="col-md-2 ">
+	  				<div class="card" style="width: 18rem;">
+					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">
+					  <div class="card-body">
+					    <h5 class="card-title">JavaScript</h5>
+					    <p class="card-text">Introduction to Javascript.</p>
+					    <a href="#" class="btn btn-primary">Enroll</a>
+					  </div>
+					</div>
+	  			</div>
+
+	  			<div class="col-md-2 ">
+	  				<div class="card" style="width: 18rem;">
+					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">
+					  <div class="card-body">
+					    <h5 class="card-title">Python</h5>
+					    <p class="card-text">Introduction to Python.</p>
+					    <a href="#" class="btn btn-primary">Enroll</a>
+					  </div>
+					</div>
+	  		</div>
+
+	  	</div>	 
+
+	  	<!--
+	  	<div class="col-md-3">
+	  		<div class="alert alert-success" role="alert">
+			  <h4 class="alert-heading">Well done!</h4>
+			  <p>No Content for now</p>
+			  <p> Will be added later</p>
+			  
+			  <hr>
+			</div>
+	  	</div> 	
+	  -->
+	
+  </div><!--End of row class -->
+</div><!--End of container class -->
+
+{%endblock%}
