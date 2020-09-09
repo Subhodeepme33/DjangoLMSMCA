@@ -18,7 +18,7 @@ class CourseAdmin(admin.ModelAdmin):
 		return str(self.courseuid)
 
 class ContentAdmin(admin.ModelAdmin):
-	list_display=['contentid','contentheading']
+	list_display=['contentheading']
 
 class SubscriptionAdmin(admin.ModelAdmin):
 	list_display =[ 'coursename' , 'username']

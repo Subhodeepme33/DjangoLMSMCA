@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<div class="container mx-auto">
+  <div class="row mt-5 mb-5">
+  	<label class="col-sm-3 col-form-label">Course Name</label>
+    <div class="col-sm-4">
+    	<ul class="list-group">
+  			<li class="list-group-item disabled" aria-disabled="true">{{request.session.activecoursename}}</li>
+  		</ul>
+  	</div>
+  </div>
+</div>
+
+<!--Content Create area -->
+<div class="container">
+	<label class="col-sm-3 col-form-label mb-5 ml-0">Create your content</label>
+
+	<form method="post" action="/content/continuecreate" >
+	
+		{% csrf_token %}
+		  <div class="form-row">
+		    <div class="form-group col-md-6">
+		      <label >Content Heading</label>
+		      <input type="text" name="heading" class="form-control" name="heading" placeholder="Heading">
+		    </div>
+		   
+		    <div class="form-group col-md-6">
+		      <label>Content Url</label>
+		      <input type="text" name="url" class="form-control" name="url" placeholder="Video Url">
+		    </div>
+		  </div>
+		    
+		    <div class="form-group">
+		    <label>Content</label>
+		    <textarea class="form-control" name="content" rows="5"></textarea>
+		    </div>
+		  <a href="">
+		  <button type="submit" class="btn btn-success">Add Another</button>
+		  </a>
+		  
+	</form>
+		  
+		  <a href="/content/contentcreate">
+		  <button type="submit" class="btn btn-danger mt-3">Exit</button>
+		  </a>
+
+</div>
+
+
+
+
+
+
+{% endblock%}

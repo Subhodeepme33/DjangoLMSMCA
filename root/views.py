@@ -1,10 +1,14 @@
 from django.shortcuts import render,redirect
 from .models.UserModel import Users
+from .models.ContentModel import Content
+from .models.CourseModel import Course
 from django.http import HttpResponse
 
 
 def home(request):
 	return render(request,'login.html')
+
+
 
 def login(request):
 	if request.method == 'POST':
@@ -25,6 +29,16 @@ def login(request):
 			return render(request,'homepage.html',{'data':userdata})
 		else:
 			return HttpResponse('User not found')
+
+
+def viewavailablecontents(request):
+	if request.session.get('user') is not None:
+		course=Course.objects.all()
+		return render(request,'viewavailablecontents.html',{'c':course})
+	else:
+		return redirect('/')
+
+
 
 def profilepicchange(request):
 	pic = request.FILES['image']

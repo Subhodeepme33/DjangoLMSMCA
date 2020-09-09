@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<!-- Form -->
+
+<form method="post" action="/content/contentcreate/">
+  {% csrf_token %}
+  <div class="row mt-5">
+  	<label class="col-sm-3 col-form-label ml-5">Create Course</label>
+    <div class="col-sm-4">
+      
+      <input type="text" name="coursename" class="form-control" placeholder="Course name">
+    </div>
+    <div class="col-sm-4">
+      <a href="/content/continuecreate/"><button type="submit" class="btn btn-primary">Create</button>
+    </div>
+  </div>
+</form>
+
+
+
+<label class="ml-5">Edit previous contents</label>
+<ul class="list-group ml-5">
+  <a href="/content/displaycontent"><li class="list-group-item">View Content</li></a>
+  <li class="list-group-item">Data to be added</li>
+  <li class="list-group-item">Data to be added</li>
+  <li class="list-group-item">Data to be added</li>
+  <li class="list-group-item">Data to be added</li>
+</ul>
+
+
+{%endblock%}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block content %}
+
+
+					<h1> You are viewing all the courses which are currently avaialble </h1>
+				<div class="container col-md-12">
+					<!-- Available courses -->
+					{% for x in c%}
+					<div class="card" style="width: 18rem; display: inline; float: left;">
+					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">
+					  <div class="card-body">
+					    <h5 class="card-title">{{ x.id }}</h5>
+					    <p class="card-text">{{ x.coursename }}</p>
+					    <a href="{% url 'showcontent' x.id x.courseuid %}" class="btn btn-primary">View Course</a>
+					  </div>
+					</div>
+					{% endfor %}
+				</div>
+{%endblock%}
