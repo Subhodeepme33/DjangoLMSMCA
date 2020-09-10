@@ -1,15 +1,17 @@
 from django.shortcuts import render,redirect
 from root.models.CourseModel import Course
+
 from root.models.ContentModel import Content
 # Create your views here.
 
 def contentcreate(request):
 	if request.method == 'POST':
 		cname=request.POST['coursename']
-		course=Course(coursename=cname)
+		ccat=request.POST['category']
+		course=Course(coursename=cname,coursecategory=ccat)
 		course.save()
 		getcourseid=Course.objects.values_list('id',flat=True).get(coursename=cname)
-
+		userid=request.session.get('id')
 		request.session['activecourse']=getcourseid
 		request.session['activecoursename']=cname
 		return render(request,'continuecreate.html',{'c':course})
@@ -20,14 +22,14 @@ def contentcreate(request):
 def viewcontinuecreate(request):
 	return render(request,'continuecreate.html')
 
+def fetchcontent(request,id,uid):
+	getcontent=Content.objects.filter(id=id)
+	return render(request,'fetchcontent.html',{'c':getcontent})
 
 
 def showcontent(request,id,uid):
 	getpost=Content.objects.filter(cuid=uid)
 	return render(request,'displaycontent.html',{'data':getpost})
-
-
-
 
 
 def continuecreate(request):
@@ -39,6 +41,7 @@ def continuecreate(request):
 		url=request.POST['url']
 		cont=request.POST['content']
 		courseuid=str(cid)
+		
 		content=Content(contentheading=head,contentbody=cont,contenturl=url,cuid=courseuid)
 
 		content.save()

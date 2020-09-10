@@ -1,5 +1,6 @@
 from django.db import models
 from .CourseModel import Course
+from embed_video.fields import EmbedVideoField
 
 class Content(models.Model):
 
@@ -8,8 +9,10 @@ class Content(models.Model):
 	cuid=models.CharField(max_length=100,blank=True)
 	contentheading=models.CharField(max_length=100)
 	contentbody=models.TextField()
-	contenturl=models.TextField()
-
+	contenturl=EmbedVideoField()
+	createdby=models.CharField(max_length=100,blank=True)
+	createdbyid=models.IntegerField(default=0)
+	
 	class Meta:
 		db_table="content"
 

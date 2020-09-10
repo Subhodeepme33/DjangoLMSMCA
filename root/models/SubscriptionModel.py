@@ -4,11 +4,11 @@ from .UserModel import Users
 
 class Subscription(models.Model):
 	#id PK
-	courseuid=models.ForeignKey(Course,on_delete=models.CASCADE,default=None) #FK
+	courseid=models.IntegerField(default=None)
 	coursename=models.CharField(max_length=50)
 	username=models.CharField(max_length=50)
-	useruid=models.ForeignKey(Users,on_delete=models.CASCADE,default=None)
-	
+	userid=models.IntegerField(default=None)
+	isenrolled=models.BooleanField(default=False)
 
 	class Meta:
 		db_table="subscription"

@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models.UserModel import Users
 from .models.ContentModel import Content
 from .models.CourseModel import Course
+from .models.SubscriptionModel import Subscription
 from django.http import HttpResponse
 
 
@@ -15,7 +16,8 @@ def login(request):
 		uname=request.POST['uname']
 		password=request.POST['paswd']
 		finduser=Users.objects.filter(username=uname)
-		
+		course=Course.objects.all()
+
 		if finduser:
 			#Set session
 			user_id=Users.objects.values_list('id',flat=True).get(username=uname)
@@ -23,21 +25,58 @@ def login(request):
 			#Setting session values
 			request.session['user']=uname
 			request.session['id']=user_id
-			#request.session['useruid']=user_uid
 			userdata=Users.objects.filter(username=uname)
-			#print(userdata)
-			return render(request,'homepage.html',{'data':userdata})
+			data={}
+			data['data']=userdata
+			data['course']=course
+			return render(request,'homepage.html',data)
 		else:
 			return HttpResponse('User not found')
 
+#Show the content that is created by a teacher/admin
+def mycontentshow(request,id,uid):
 
+
+
+
+
+def profiledetails(request,id,uid):
+	finduser=Users.objects.filter(id=id)
+	return render(request,'myprofile.html',{'userdet':finduser})
+
+def editprofile(request,id,uid):
+	finduser=Users.objects.filter(id=id)
+	newemail=request.POST['updatedemail']
+	for x in finduser:
+		x.email=newemail
+
+	x.save()
+	return HttpResponse('Data Saved')
+
+#Needs to be workedon
 def viewavailablecontents(request):
 	if request.session.get('user') is not None:
+		userid=request.session.get('id')
+		subscribelist=Subscription.objects.filter(userid=userid).values()
 		course=Course.objects.all()
+		'''
+		data={}
+		data['c']=Course.objects.all()
+		data['status']=subscribelist
+		'''
 		return render(request,'viewavailablecontents.html',{'c':course})
 	else:
 		return redirect('/')
 
+def enrollcourse(request,id,uid):
+	courseid=Course.objects.values_list('id',flat=True).get(id=id)
+	coursename=Course.objects.values_list('coursename',flat=True).get(id=id)
+	userid=request.session.get('id')
+	username=Users.objects.values_list('username',flat=True).get(id=userid)
+	subscription=Subscription.objects.filter(userid=userid)
+	subscribe=Subscription(courseid=courseid,userid=userid,coursename=coursename,username=username,isenrolled=True)
+	subscribe.save()
+	return render(request,'homepage.html')
 
 
 def profilepicchange(request):

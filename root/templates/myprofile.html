@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block content %}
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+<div class="container mt-4">
+
+		<!-- Modal -->
+		<div class="modal fade" id="editprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Profile</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+				{%for x in userdet%}
+		        <form method="POST" action="{% url 'editprofile' x.id x.useruid %}">
+				<div class="form-row">
+					    
+					      <label>Email</label>
+					      <input type="email" class="form-control" name="updatedemail" placeholder="Enter new email">
+					</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        
+		        	{% csrf_token %}
+		        	<button type="submit" class="btn btn-primary">Save changes</button>
+		        	
+		    	</form>
+		    	{%endfor%}
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	
+	{%for x in userdet%}
+	<div class="card mx-auto " style="width: 18rem;">
+	  <img class="card-img-top" src="{{x.image.url}}" alt="Card image cap " style="width: 100%;height: 200px">
+	  <div class="card-body">
+	    <h5 class="card-title">Name:{{x.firstname}}</h5>
+	    <p class="card-text">Data to be added</p>
+	  </div>
+	  <ul class="list-group list-group-flush">
+	    <li class="list-group-item">Email: {{x.email}}</li>
+	    <li class="list-group-item">Username: {{ x.username}}</li>
+	    {% if x.usertype == 'stu'%}
+	    <li class="list-group-item">Usertype: Student</li>
+	    {%else%}
+	    <li class="list-group-item">Usertype: Teacher</li>
+	    {%endif%}
+	  </ul>
+	  <div class="card-body">
+	  	
+	    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editprofile">
+		  Edit Profile
+		</button>
+	    
+	  </div>
+	</div>
+	{%endfor%}
+	<span class="alert alert-success">{{msg}}</span>
+</div>
+
+
+{%endblock%}

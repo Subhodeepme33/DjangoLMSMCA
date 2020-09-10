@@ -34,18 +34,15 @@
   </div>
 </div>
 
-
-
-
 <!--Page Content -->
-<a href="/content/contentcreate"><button class="btn btn-primary" target="_blank"> Go to create content</button></a>
 <div class="container col-md-12 mt-5">
   
   <div class="row">
-	    <div class="col-lg-5" id="list">
+	   
+	    <div class="container col-md-4" id="list">
 
 
-	      		<ul class="list-group col-md-6 mr-3 " style="text-decoration: none; width: 100%" >
+	      		<ul class="list-group col-md-6 mr-2 " style="text-decoration: none; width: 100%" >
 	      			<li class="list-group-item active">
 
 	      				{% for x in data %}
@@ -54,7 +51,7 @@
 
 	      				<img src="{% static 'images/default.jpg' %}" alt="" style="border-radius: 50%; width:50px"class="img-thumbnail"> 
 	      				
-	      				{% endfor %}
+	      				
 	      				<a href="/uploadprofilepic">
 	      				<i class="fas fa-camera" style="background-color: white;" data-toggle="modal" data-target="#imageupload" onclick="abc();"></i>
 	      				</a>
@@ -63,53 +60,41 @@
 
 	      		
 	      			</li>
-				  <a href="#t"><li class="list-group-item">
+				  <a href="{% url 'myprofileshow' x.id x.useruid %}"><li class="list-group-item">
 				  	<i class="far fa-id-badge"></i> My Profile</li>
 				 	<a>
+
 				  <a href="/content/viewavailablecontents"><li class="list-group-item">
 				  <i class="fas fa-search"></i> Browse Courses</li></a>
 
-				  <a href="#"><li class="list-group-item">
-				 <i class="fas fa-clipboard-check"></i> Completed courses</li></a>
-
-				  <a href="#"><li class="list-group-item">
-				  <i class="fab fa-servicestack"></i> Services</li></a>
-
+				  {% if x.usertype == 'tch' %}
+				  <a href="/content/contentcreate"><li class="list-group-item">
+				  <i class="fab fa-servicestack"></i> Create Content</li></a>
+				  
+				  <a href="{% url 'mycontentshow' x.id x.useruid %}"><li class="list-group-item">
+				  <i class="fab fa-servicestack"></i> Check your creations</li></a>
+				  {%endif%}
+				  {% endfor %}
 				  <a href="/logout"><li class="list-group-item">
 				  <i class="fas fa-sign-out-alt"></i> Logout</li></a>
 				</ul>
 	  	</div>
+
+	  	<div class="col-md-8" style="margin-left: 0;display: inline-block;">
+	  		<h1>Courses you are currently enrolled in</h1>
+
+	  		
+
+
+
+
+	  					  
+	    </div>
+            
+	  	
 	  
-	  	<div class="col-md-4">
+  </div>
 
-	       	<div class="row ">
-	  			<div class="col-md-2 ">
-	  				
-	  				<div class="card" style="width: 18rem;">
-					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">
-					  <div class="card-body">
-					    <h5 class="card-title">JavaScript</h5>
-					    <p class="card-text">Introduction to Javascript.</p>
-					    <a href="#" class="btn btn-primary">Enroll</a>
-					  </div>
-					</div>
-
-	  			</div>	  			
-	  	</div>	 
-
-	  	<!--
-	  	<div class="col-md-3">
-	  		<div class="alert alert-success" role="alert">
-			  <h4 class="alert-heading">Well done!</h4>
-			  <p>No Content for now</p>
-			  <p> Will be added later</p>
-			  
-			  <hr>
-			</div>
-	  	</div> 	
-	  -->
-	
-  </div><!--End of row class -->
-</div><!--End of container class -->
+</div>
 
 {%endblock%}

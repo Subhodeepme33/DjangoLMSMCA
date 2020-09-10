@@ -1,0 +1,22 @@
+
+{% extends 'base.html'%}
+{% load embed_video_tags %}
+{%load static%}
+{% block content %}
+<h1> Hey you are viewing content page</h1>
+
+<div class="container-fluid">
+	<div class="row">
+		  {%for x in c%}
+		  <div class="col-md-6">
+		  	<blockquote class="blockquote alert alert-info">
+		 		 <p class="mb-0">{{x.contentbody}}</p>
+			</blockquote>
+		  </div>
+		  <div class="col-md-6">{% video x.contenturl 'medium' %}</div>
+		 
+		  {%endfor%}
+	</div>
+</div>
+
+{% endblock %}
