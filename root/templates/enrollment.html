@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {%load static%}
 {% block content %}
-
-
-				<h1> You are viewing all the courses which are currently avaialble </h1>
+<h1> You are viewing all the courses which are currently avaialble </h1>
 				<div class="container col-md-12">
 					<!-- Available courses -->
-					{% for x in allcourses%}
+					{% for x in enrolled%}
 					
 					<div class="card z-depth-4 mr-5 mt-5 ml-5" style="width: 18rem; display: inline; float: left;">
 					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">

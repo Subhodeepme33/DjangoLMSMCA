@@ -4,9 +4,11 @@ from . import views
 
 urlpatterns = [
     path('',views.home),
-    path('login',views.login),
+    path('userhome',views.userhome),
     path('uploadprofilepic',views.profilepicchange),
     path('content/viewavailablecontents',views.viewavailablecontents),
+    path('content/myenrollments',views.showenrollments),
+    path('content/mycourses',views.mycourses),
     re_path(r'^myprofile/(?P<id>\w+)/(?P<uid>[0-9a-f-]+)/$', views.profiledetails,name='myprofileshow'),
     re_path(r'^editprofile/(?P<id>\w+)/(?P<uid>[0-9a-f-]+)/$', views.editprofile,name='editprofile'),
     re_path(r'^enrollcourse/(?P<id>\w+)/(?P<uid>[0-9a-f-]+)/$', views.enrollcourse,name='enrollcourse'),

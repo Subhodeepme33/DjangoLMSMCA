@@ -60,17 +60,28 @@
 
 	      		
 	      			</li>
+
+	      		  {%if 'user' in request.session %}
 				  <a href="{% url 'myprofileshow' x.id x.useruid %}"><li class="list-group-item">
 				  	<i class="far fa-id-badge"></i> My Profile</li>
 				 	<a>
 
 				  <a href="/content/viewavailablecontents"><li class="list-group-item">
 				  <i class="fas fa-search"></i> Browse Courses</li></a>
+				  
+				  <a href="/content/myenrollments"><li class="list-group-item">
+				  <i class="fas fa-search"></i> Your Enrollments </li></a>
 
+				  {%endif%}
 				  {% if x.usertype == 'tch' %}
 				  <a href="/content/contentcreate"><li class="list-group-item">
 				  <i class="fab fa-servicestack"></i> Create Content</li></a>
-				  
+
+				  <a href="/content/mycourses"><li class="list-group-item">
+				  <i class="fab fa-servicestack"></i> Your courses</li></a>
+				 				  
+
+
 				  <a href="{% url 'mycontentshow' x.id x.useruid %}"><li class="list-group-item">
 				  <i class="fab fa-servicestack"></i> Check your creations</li></a>
 				  {%endif%}
@@ -80,9 +91,21 @@
 				</ul>
 	  	</div>
 
+
+<!-- Courses Enrolled in -->
 	  	<div class="col-md-8" style="margin-left: 0;display: inline-block;">
 	  		<h1>Courses you are currently enrolled in</h1>
 
+	  			{% for x in enrolled%}
+	  			<div class="card" style="width: 18rem;">
+				  <img class="card-img-top" src="..." alt="Card image cap">
+				  <div class="card-body">
+				    <h5 class="card-title">{{x.coursename}}</h5>
+				    
+				    <a href="#" class="btn btn-primary">Go to course</a>
+				  </div>
+				</div>
+				{% endfor%}
 	  		
 
 

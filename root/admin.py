@@ -3,7 +3,7 @@ from .models.UserModel import Users
 from .models.CourseModel import Course
 from .models.ContentModel import Content
 from .models.SubscriptionModel import Subscription
-
+from .models.CategoryModel import Category
 
 class UsersAdmin(admin.ModelAdmin):
 	list_display=['firstname','lastname','username','email','useruid']
@@ -24,7 +24,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 	list_display =[ 'coursename' , 'username']
 	
 	def __str__(self):
-		return str(self.courseuid)
+		return str(self.courseid)
 
 
 
@@ -32,4 +32,5 @@ admin.site.register(Users,UsersAdmin)
 admin.site.register(Course,CourseAdmin)
 admin.site.register(Content,ContentAdmin)
 admin.site.register(Subscription,SubscriptionAdmin)
+admin.site.register(Category)
 

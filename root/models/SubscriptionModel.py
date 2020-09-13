@@ -14,4 +14,4 @@ class Subscription(models.Model):
 		db_table="subscription"
 	
 	def __str__(self):
-		return str(self.courseuid)
+		return str(self.courseid)

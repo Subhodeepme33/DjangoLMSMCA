@@ -11,7 +11,15 @@
     <div class="col-sm-4">
       
       <input type="text" name="coursename" class="form-control" placeholder="Course name">
-      <input type="text" name="category" class="form-control" placeholder="Course category">
+     <div class="form-group">
+        
+        <select class="form-control" name="category">
+          {% for x in cat%}
+          <option>{{x.category}}</option>
+          {% endfor%}
+        </select>
+        
+      </div>
     </div>
     <div class="col-sm-4">
       <a href="/content/continuecreate/">

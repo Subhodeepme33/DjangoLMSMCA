@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<div class="container">
+	<center><h3> You are inside your creations page</h3></center>
+		{% for x in data %}
+		<table class="table table-bordered">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">CourseID</th>
+		      <th scope="col">CourseName</th>
+		      <th scope="col">CourseCategory</th>
+		      <th scope="col">Created On</th>
+		      <th scope="col">Actions</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">{{ x.id }}</th>
+		      <td>{{ x.coursename }}</td>
+		      <td>{{ x.coursecategory }}</td>
+		      <td> Created on data will be added </td>
+		      <td style="padding: 5px;margin-right: 5px;">
+		      
+		      <a href="{% url 'editcontent' x.id %}" ><button type="submit" class="btn btn-success">Edit</button></a>
+		      <a href=""><button type="button" class="btn btn-primary">View </button></a>
+		      
+
+		      </td>
+		    </tr>
+		    
+		  </tbody>
+		</table>
+		{% endfor%}
+
+</div>
+
+{% endblock%}

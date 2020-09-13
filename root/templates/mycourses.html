@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{%block content%}
+{%load static%}
+
+
+<div class="container">
+	<center>
+	<h3>Your courses</h3>
+	</center>
+	{%for x in data%}
+	<table class="table mt-4">
+	  <thead class="thead-dark">
+	    <tr>
+	      
+	      <th scope="col">Course Name</th>
+	      <th scope="col">Course Category</th>
+	      
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	     
+	      <td>{{x.coursename}}</td>
+	      <td>{{x.coursecategory}}</td>
+	      <td><button type="submit" class="btn btn-primary">Edit</button></td>
+	    </tr>
+	   </tbody>
+	</table>
+	{%endfor%}
+</div>
+
+
+{%endblock%}
