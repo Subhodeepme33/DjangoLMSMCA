@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{%block content%}
+{%load static%}
+
+<div class="container">
+		<center><h3>Add new content </h3></center>
+
+					<form method="POST" action="{% url 'addnew' request.session.currentcourseid%}">
+						{%csrf_token%}
+						<div class="form-row">
+							<label>New Heading</label>
+						    <input type="text" class="form-control" name="newhead" placeholder="Enter heading ">
+							<label>New Body</label>
+						    <input type="text" class="form-control" name="newbody"  placeholder="Enter body ">
+						   	<label>New Url</label>
+						    <input type="text" class="form-control" name="newurl"  placeholder="Enter url ">
+						    <button type="submit" class="btn btn-primary">Save</button>
+						</div>
+					</form>
+</div>
+{%endblock%}

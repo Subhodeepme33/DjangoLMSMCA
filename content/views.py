@@ -68,7 +68,30 @@ def editcontent(request,id):
 	#Fetches me coursuid
 	fetchcourseidforid=Course.objects.values_list('courseuid',flat=True).get(id=id) 
 	fetchcontentforcourseid=Content.objects.filter(cuid=fetchcourseidforid)
-	return render(request,'editcontent.html',{'data':fetchcontentforcourseid})
+	request.session['currentcourseid']=Course.objects.values_list('id',flat=True).get(id=id)
+	dic={}
+	dic['data']=fetchcontentforcourseid
+	dic['add']=fetchcontentforcourseid
+	return render(request,'editcontent.html',dic)
+
+
+def addnew(request,uid):
+	if request.method == 'POST':
+		newhead=request.POST['newhead']
+		newbody=request.POST['newbody']
+		newurl=request.POST['newurl']
+		#fetchcourseuid
+		courseid=request.session.get('currentcourseid')
+		uid=Course.objects.values_list('courseuid',flat=True).get(id=courseid) 
+		createdby=request.session.get('user')
+		createdbyid=request.session.get('id')
+		content=Content(contentheading=newhead,contentbody=newbody,contenturl=newurl,cuid=str(uid),createdby=createdby,createdbyid=createdbyid)
+		content.save()
+		return render(request,'homepage.html')
+
+	if request.method == 'GET':
+		return render(request,'addnewcontent.html')
+
 
 
 def editfinal(request,id):
@@ -83,17 +106,31 @@ def editfinal(request,id):
 		return render(request,'editcontentcontinue.html')
 
 def editfinish(request,id):
-	fetchcontentbyid=Content.objects.filter(id=id)
-	return render(request,'editcontentcontinue.html',{'data':fetchcontentbyid})
+	if request.method == 'POST':
+		newhead= request.POST['newhead']
+		newbody= request.POST['newbody']
+		newurl= request.POST['newurl']
+		fetchcontentbyid=Content.objects.filter(id=id)
+		for x in fetchcontentbyid:
+			x.contentheading=newhead
+			x.contentbody=newbody
+			x.contenturl=newurl
+		x.save()
+		return HttpResponse('Data Edited Successfully')
+
+	elif request.method == 'GET':
+		fetchcontentbyid=Content.objects.filter(id=id)
+		return render(request,'editcontentcontinue.html',{'data':fetchcontentbyid})
+
+def viewmycontent(request,id):
+	getuser=request.session.get('user')
+	getcuid=Course.objects.values_list('courseuid',flat=True).get(id=id)
+	fetchcontent=Content.objects.filter(cuid=getcuid)
+	#fetchcourses=Course.objects.filter(createdby=getuser)
+	return render(request,'mycreationsview.html',{'data':fetchcontent})
+
+def displaymycontent(request,id):
+	getcontent=Content.objects.filter(id=id)
+	return render(request,'fetchcontent.html',{'c':getcontent})
 
 
-
-def addnew(request,id,uid):
-	newhead=request.POST['newhead']
-	newbody=request.POST['newbody']
-	newurl=request.POST['newurl']
-	createdby=request.session.get('user')
-	createdbyid=request.session.get('id')
-	content=Content(contentheading=newhead,contentbody=newbody,contenturl=newurl,cuid=uid,createdby=createdby,createdbyid=createdbyid)
-	content.save()
-	return HttpResponse('Data Saved Successfully!')

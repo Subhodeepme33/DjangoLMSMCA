@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{%block content%}
+<div class="container-fluid" style="float: left ;display: inline-block;">
+	<h1> You are viewing your creations</h1>
+		
+		{% for x in data %}
+		<div class="card" style="float: left ;display: inline; margin: 10px;">
+		  <img class="card-img-top" src="https://picsum.photos/200" alt="Card image cap" style="height: 200px;width: 100%">
+		  <div class="card-body">
+		    <h5 class="card-title">{{x.contentheading}}</h5>
+		    <p class="card-text">{{x.contentbody}}
+		    </p>
+		    <a href="{% url 'displaymycontent' x.id %}" class="btn btn-primary">View</a>
+		  </div>
+		</div>
+		{% endfor %}
+</div>
+
+{%endblock%}

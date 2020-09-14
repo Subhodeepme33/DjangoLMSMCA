@@ -24,7 +24,7 @@
 		      <td style="padding: 5px;margin-right: 5px;">
 		      
 		      <a href="{% url 'editcontent' x.id %}" ><button type="submit" class="btn btn-success">Edit</button></a>
-		      <a href=""><button type="button" class="btn btn-primary">View </button></a>
+		      <a href="{% url 'viewmycontent' x.id %}"><button type="button" class="btn btn-primary">View </button></a>
 		      
 
 		      </td>

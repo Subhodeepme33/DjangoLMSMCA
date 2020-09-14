@@ -36,11 +36,6 @@ def userhome(request):
 	elif request.method == 'GET':
 		pass
 
-				
-def mycourses(request):
-	user=request.session.get('user')
-	fetchmycourses=Course.objects.filter(createdby=user)
-	return render(request,'mycourses.html',{'data':fetchmycourses})
 
 
 def showenrollments(request):

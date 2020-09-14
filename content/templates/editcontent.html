@@ -9,41 +9,6 @@
 	<h3 class="mb-4">Hey edit your content</h3>
 	</center>
 
-	<!-- New Content modal for a course -->
-	<div class="modal fade" id="addcontents" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Content</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        {%for x in data%}
-		 <form method="POST" action="{% url 'addnew' x.id x.cuid %}">
-				<div class="form-row">
-					    
-					<label>Heading</label>
-				    <input type="text" class="form-control" name="newhead" placeholder="Enter heading ">
-				    <label>Body</label>
-				    <input type="text" class="form-control" name="newbody" placeholder="Enter Body ">
-				    <label>Url</label>
-				    <input type="text" class="form-control" name="newurl" placeholder="Enter Url ">
-				   				    
-				</div>
-
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        {% csrf_token %}
-	        <button type="submit" class="btn btn-primary">Save</button>
-	    </form>
-	      {%endfor%}
-	      </div>
-	    </div>
-	  </div>
-	</div>
  
 	
 	<table class="table">
@@ -69,15 +34,24 @@
 	      <td><a href="{% url 'editfinish' x.id %}"><button type="button" class="btn btn-primary">Edit</button></a></td>
 	    </tr>
 	  </tbody>
-	  {%endfor%}
+	  	
+	  	{%endfor%}
+
 	</table>
-	
+	   	{% for x in add %}
+	   	{% if forloop.first %}
+	   	
+	  	
+	  	<a href="{% url 'addnew' x.cuid%}"><button type="submit" class="btn btn-primary" >Add Content</button>
+	  	</a>
+	  	{%endif%}
+	  	{%endfor%}
+	   	
 
 
-	  <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcontents">Add Content
-	  </button>
-	  </td>
-
+	  
+	  
+	  
 
 
 </div>
