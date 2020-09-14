@@ -82,6 +82,12 @@ def editfinal(request,id):
 	elif request.method == 'GET':
 		return render(request,'editcontentcontinue.html')
 
+def editfinish(request,id):
+	fetchcontentbyid=Content.objects.filter(id=id)
+	return render(request,'editcontentcontinue.html',{'data':fetchcontentbyid})
+
+
+
 def addnew(request,id,uid):
 	newhead=request.POST['newhead']
 	newbody=request.POST['newbody']

@@ -2,15 +2,20 @@
 {%block content%}
 {%load static%}
 				<h1> Hey continue edit </h1>
-				
-		        <form method="POST" action="{% url 'editfinal' id %}">
-				{% csrf_token %}
-				<div class="form-row">
-					    
-					<label>New Body</label>
-				    <input type="text" class="form-control" name="newbody" placeholder="Enter heading ">
-				   			    
+				<div class="container">
+			        {% for x in data %}
+			        <form method="POST" action="">
+					{% csrf_token %}
+					<div class="form-row">
+						<label>New Heading</label>
+					    <input type="text" class="form-control" name="newbody" value = {{x.contentheading}} placeholder="Enter heading ">
+						<label>New Body</label>
+					    <input type="text" class="form-control" name="newbody" value = {{x.contentbody}} placeholder="Enter heading ">
+					   	<label>New Url</label>
+					    <input type="text" class="form-control" name="newurl" value = {{x.contenturl}} placeholder="Enter heading ">		    
+					</div>
+					{% endfor %}
+					<button type="button" class="btn btn-primary">Save</button>
+					</form>
 				</div>
-				<button type="button" class="btn btn-primary">Save</button>
-				
 {%endblock%}
