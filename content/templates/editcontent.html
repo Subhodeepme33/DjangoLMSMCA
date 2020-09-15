@@ -4,14 +4,14 @@
 
 	
 
-<div class="container mt-4">
+<div class="container mt-4" style="font-family: 'Roboto Condensed', sans-serif;">
 	<center>
 	<h3 class="mb-4">Hey edit your content</h3>
 	</center>
 
  
 	
-	<table class="table">
+	<table class="table table-bordered primary">
 	
 	  <thead class="thead-dark">
 		
@@ -29,8 +29,8 @@
 	    <tr>
 	      <th scope="row">{{x.id}}</th>
 	      <td>{{x.contentheading}}</td>
-	      <td>{{x.contentbody}}</td>
-	      <td>{{x.contenturl}}</td>
+	      <td>{{x.contentbody | truncatechars:50 }}...</td>
+	      <td>{{x.contenturl| truncatechars:50}}</td>
 	      <td><a href="{% url 'editfinish' x.id %}"><button type="button" class="btn btn-primary">Edit</button></a></td>
 	    </tr>
 	  </tbody>

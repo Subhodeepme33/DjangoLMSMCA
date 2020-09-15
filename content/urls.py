@@ -6,7 +6,7 @@ urlpatterns = [
     path('contentcreate/',views.contentcreate),
     path('continuecreate',views.continuecreate),
     path('displaycontent',views.displaycontent),
-    #path('addnew',views.addnew),
+    #path('myenrollments',views.showenrollments),
     re_path(r'^editcontent/(?P<id>\w+)', views.editcontent,name='editcontent'),
     re_path(r'^editfinal/(?P<id>\w+)', views.editfinal,name='editfinal'),
     re_path(r'^editfinish/(?P<id>\w+)', views.editfinish,name='editfinish'),

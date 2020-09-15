@@ -5,7 +5,7 @@ from .models.CourseModel import Course
 from .models.SubscriptionModel import Subscription
 from django.http import HttpResponse
 
-
+ 
 def home(request):
 	return render(request,'login.html')
 
@@ -34,15 +34,18 @@ def userhome(request):
 			return HttpResponse('User not found')
 
 	elif request.method == 'GET':
-		pass
-
+		return render(request,'homepage.html')
 
 
 def showenrollments(request):
-	if request.method == 'GET':
-		userid=request.session.get('id')
-		enrolledcourses=Subscription.objects.filter(userid=userid)
-		return render(request,'homepage.html',{'enrolled':enrolledcourses})
+	#if request.method == 'GET':
+	userid=request.session.get('id')
+	enrolledcourses=Subscription.objects.filter(userid=userid)
+	return render(request,'enrollment.html',{'enrolled':enrolledcourses})
+
+
+
+
 
 
 #Show the content that is created by a teacher/admin
@@ -78,10 +81,8 @@ def viewavailablecontents(request):
 		subscribelist=Subscription.objects.filter(userid=userid).values()
 		course=Course.objects.all()
 		#enrolledcourses=Subscription.objects.filter(userid=userid)
-
 		data={}
 		data['allcourses']=course
-		#data['enrolledcourses']=enrolledcourses
 
 		return render(request,'viewavailablecontents.html',data)
 	else:

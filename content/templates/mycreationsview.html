@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {%block content%}
-<div class="container-fluid" style="float: left ;display: inline-block;">
+<div class="container-fluid" style="float: left ;display: inline-block;font-family: 'Roboto Condensed', sans-serif;">
 	<h1> You are viewing your creations</h1>
 		
 		{% for x in data %}
@@ -9,7 +9,7 @@
 		  <img class="card-img-top" src="https://picsum.photos/200" alt="Card image cap" style="height: 200px;width: 100%">
 		  <div class="card-body">
 		    <h5 class="card-title">{{x.contentheading}}</h5>
-		    <p class="card-text">{{x.contentbody}}
+		    <p class="card-text">{{x.contentbody | truncatechars:50}}..
 		    </p>
 		    <a href="{% url 'displaymycontent' x.id %}" class="btn btn-primary">View</a>
 		  </div>

@@ -2,49 +2,50 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container" style="font-family: 'Roboto Condensed', sans-serif;">
   <div class="row border border-primary rounded p-4 m-5 mx-auto">
     <div class="col">
     	<h1 class="col-md-6 mb-4"> Registration </h1>
 		 
-		 <form method="POST" action="/register">
+		 <form id="register">
 		 	{% csrf_token %}
+
 		  <div class="form-row">
 		    <div class="form-group col-md-6">
 		      <label>Firstname</label>
-		      <input type="text" name="fname" class="form-control" placeholder="Enter your firstname">
+		      <input type="text" name="fname" id="fname" class="form-control" placeholder="Enter your firstname">
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label>Lastname</label>
-		      <input type="text" name="lname" class="form-control" placeholder="Enter your lastname">
+		      <input type="text" name="lname" id="lname" class="form-control" placeholder="Enter your lastname">
 		    </div>
 		  </div>
 
 		  <div class="form-group">
 		    <label>Email</label>
-		    <input type="email" class="form-control" name="email" placeholder="Enter your email">
+		    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
 		  </div>
 
 		  <div class="form-group">
 		    <label>Username</label>
-		    <input type="text" class="form-control" name="uname"  placeholder="Enter username">
+		    <input type="text" class="form-control" id="uname" name="uname"  placeholder="Enter username">
 		  </div>
 
 		  <div class="form-row">
 			    <div class="form-group col-md-6">
 			      <label for="inputEmail4">Password</label>
-			      <input type="password" name="passwd" class="form-control" placeholder="Enter a password">
+			      <input type="password" name="passwd" id="passwd" class="form-control" placeholder="Enter a password">
 			    </div>
 			    <div class="form-group col-md-6">
 			      <label>Confirm Password</label>
-			      <input type="password" name="confpas" class="form-control" >
+			      <input type="password" name="confpas" id="confpas" class="form-control" >
 			    </div>
 		  </div>
 
 		<div class="form-row">
 			<div class="form-group col-md-3">
 			      <label>Registering As</label>
-			      <select name="choice" class="form-control">
+			      <select name="choice" id="choice" class="form-control">
 			        <option>Choose</option>
 			        <option>Student</option>
 			        <option>Teacher</option>
@@ -62,11 +63,36 @@
   	</div>
   </div>
  </div>
+ 
+<script type="text/javascript">
+	$(document).on('submit','#register',function(e){
+		e.preventDefault();
+
+		$.ajax({
+			type:'POST',
+			url:'register',
+			data:{
+					fname:$('#fname').val(),
+					lname:$('#lname').val(),
+					email:$('#email').val(),
+					uname:$('#uname').val(),
+					passwd:$('#passwd').val(),
+					confpas:$('#confpas').val(),
+					choice:$('#choice').val(),
+					csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+				},
+				success:function(){
+					swal("Yay!", "You have successfully registered!", "success");
+					document.getElementById("register").reset(); 
+
+				}
+			
 
 
+		})
+	})
 
 
-
-
+</script>
 
 {%endblock%}
