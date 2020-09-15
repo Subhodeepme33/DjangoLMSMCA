@@ -6,33 +6,7 @@
 
 
 <!-- Image Upload Modal -->
-<div class="modal fade" id="imageupload" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Choose an image</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="POST" action="/uploadprofilepic" enctype="multipart/form-data">
-      	 {% csrf_token %}
-	      <div class="modal-body">
-		       <div class="input-group">
-				  <div class="custom-file">
-				    <input type="file" name="image">
-				   </div>
-				  
-				</div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="submit" name="imgupload" class="btn btn-primary">Upload</button></a>
-      </form>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!--Page Content -->
 <div class="container col-md-12 mt-5">
@@ -42,20 +16,22 @@
 	    <div class="container col-md-3" id="list" style="font-family: 'Roboto Condensed', sans-serif;">
 
 	    	<div class="container col-md-12">
-	      		<ul class="list-group" style="text-decoration: none; width: 100%" >
+	      		<ul class="list-group" style="text-decoration: none; width: 100%;font-size: 18px;" >
 	      			<li class="list-group-item active">
 
-	      				{% for x in data %}
-	      				
+	      			{% for x in data %}	      				
 	      			   <span>
+	      			   	{%  if x.image %}
+	      				<img src="{{ x.image.url }}" alt="" style="border-radius: 50%; width:50px"class="img-thumbnail"> 
+	      				{% else %}
+	      				<img src="{% static 'images/default.jpg' %}" alt="" style="border-radius: 50%; width:50px"class="img-thumbnail"> 
 
-	      				<img src="{% static 'images/default.jpg' %}" alt="" style="border-radius: 50%; width:50px"class="img-thumbnail">       				
-	      				<a href="/uploadprofilepic">
-	      				<i class="fas fa-camera" style="background-color: white;" data-toggle="modal" data-target="#imageupload" onclick="abc();"></i>
-	      				</a>
+	      				{%endif%}
 	      				 Welcome,{{request.session.user}}
 	      				</span>
 	      			</li>
+
+	      		
 
 	      		  {%if 'user' in request.session %}
 				  <a href="{% url 'myprofileshow' x.id x.useruid %}">
@@ -67,25 +43,30 @@
 				  	<li class="list-group-item border border-primary rounded-bottom">
 				  <i class="fas fa-search"></i> Browse Courses</li></a>
 				  
-				  <a href="/myenrollments">
+				  <a href="">
 				  	<li class="list-group-item border border-primary rounded-bottom">
-				  <i class="fas fa-search"></i> Your Enrollments </li></a>
+				  <i class="fas fa-check-square"></i> Your Enrollments </li></a>
 
 				  {%endif%}
+
+
 				  {% if x.usertype == 'tch' %}
 				  <a href="/content/contentcreate">
 				  	<li class="list-group-item border border-primary rounded-bottom">
-				  <i class="fab fa-servicestack"></i> Create Content</li></a>				  
+				  <i class="fas fa-plus"></i> Create Content</li></a>				  
 
 
 				  <a href="{% url 'mycontentshow' x.id x.useruid %}"><li class="list-group-item border border-primary rounded-bottom">
-				  <i class="fab fa-servicestack"></i> Check your creations</li></a>
+				  <i class="fas fa-eye"></i> Check your creations</li></a>
+				  
 				  {%endif%}
 				  {% endfor %}
 				  <a href="/logout"><li class="list-group-item border border-primary rounded-bottom">
 				  <i class="fas fa-sign-out-alt"></i> Logout</li></a>
 				</ul>
+
 			</div>
+
 	  	</div>
 
 

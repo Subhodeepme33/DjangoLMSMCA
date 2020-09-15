@@ -7,7 +7,7 @@
     <div class="col">
     	<h1 class="col-md-6 mb-4"> Registration </h1>
 		 
-		 <form id="register">
+		 <form id="register" enctype="multipart/form-data">
 		 	{% csrf_token %}
 
 		  <div class="form-row">
@@ -51,6 +51,7 @@
 			        <option>Teacher</option>
 			      </select>
 			    </div>
+
 		</div>
 
 
@@ -67,11 +68,12 @@
 <script type="text/javascript">
 	$(document).on('submit','#register',function(e){
 		e.preventDefault();
-
+		
 		$.ajax({
 			type:'POST',
 			url:'register',
-			data:{
+			data:
+			{
 					fname:$('#fname').val(),
 					lname:$('#lname').val(),
 					email:$('#email').val(),

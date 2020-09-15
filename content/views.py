@@ -2,8 +2,9 @@ from django.shortcuts import render,redirect
 from root.models.CourseModel import Course
 from root.models.ContentModel import Content
 from root.models.CategoryModel import Category
+from root.models.SubscriptionModel import Subscription
 from django.http import HttpResponse
-
+from datetime import datetime
 
 
 
@@ -12,7 +13,8 @@ def contentcreate(request):
 		cname=request.POST['coursename']
 		ccat=request.POST['category']
 		createdby=request.session.get('user')
-		course=Course(coursename=cname,coursecategory=ccat,createdby=createdby)
+		createdat=datetime.now()
+		course=Course(coursename=cname,coursecategory=ccat,createdby=createdby,createdat=createdat)
 		course.save()
 		getcourseid=Course.objects.values_list('id',flat=True).get(coursename=cname)
 		
@@ -25,6 +27,16 @@ def contentcreate(request):
 		category=Category.objects.all()
 		return render(request,'contentcreate.html',{'cat':category})
 
+
+def showenrollments(request,id,uid):
+	
+	userid=request.session.get('id')
+	enrolledcourses=Subscription.objects.filter(userid=userid)
+	return render(request,'enrolled.html',{'enrolled':enrolledcourses})
+
+
+
+
 def viewcontinuecreate(request):
 	return render(request,'continuecreate.html')
 
@@ -35,7 +47,7 @@ def fetchcontent(request,id,uid):
 
 def showcontent(request,id,uid):
 	getpost=Content.objects.filter(cuid=uid)
-	return render(request,'displaycontent.html',{'data':getpost})
+	return render(request,'displaycontent.html',{'dt':getpost})
 
 
 def continuecreate(request):
@@ -128,6 +140,13 @@ def viewmycontent(request,id):
 	fetchcontent=Content.objects.filter(cuid=getcuid)
 	#fetchcourses=Course.objects.filter(createdby=getuser)
 	return render(request,'mycreationsview.html',{'data':fetchcontent})
+'''
+def deletecontent(request,id):
+	getcourse=Course.objects.filter(id=id)
+	getcourse.delete()
+	return HttpResponse('Deleted :)')
+'''
+
 
 def displaymycontent(request,id):
 	getcontent=Content.objects.filter(id=id)

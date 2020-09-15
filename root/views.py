@@ -19,6 +19,8 @@ def userhome(request):
 		course=Course.objects.all()
 		userid=request.session.get('id')
 		enrolledcourses=Subscription.objects.filter(userid=userid)
+		
+
 		if finduser:
 			
 			user_id=Users.objects.values_list('id',flat=True).get(username=uname)
@@ -33,19 +35,25 @@ def userhome(request):
 		else:
 			return HttpResponse('User not found')
 
+	
 	elif request.method == 'GET':
-		return render(request,'homepage.html')
-
-
-def showenrollments(request):
-	#if request.method == 'GET':
-	userid=request.session.get('id')
-	enrolledcourses=Subscription.objects.filter(userid=userid)
-	return render(request,'enrollment.html',{'enrolled':enrolledcourses})
-
-
-
-
+		if 'user' in request.session and 'id' in request.session:
+			uname=request.session.get('user')
+			course=Course.objects.all()
+			userdata=Users.objects.filter(username=uname)
+			data={}
+			data['data']=userdata
+			data['course']=course
+			return render(request,'homepage.html',data)
+	
+'''
+def showenrollments(request,id,uid):
+	
+	if request.method == 'GET':
+		#useruid=
+		userid=request.session.get('id')
+		enrolledcourses=Subscription.objects.filter(userid=userid)
+		return render(request,'enrollment.html',{'enrolled':enrolledcourses})'''
 
 
 #Show the content that is created by a teacher/admin
@@ -61,8 +69,6 @@ def mycontentshow(request,id,uid):
 def profiledetails(request,id,uid):
 	finduser=Users.objects.filter(id=id)
 	return render(request,'myprofile.html',{'userdet':finduser})
-
-
 
 
 def editprofile(request,id,uid):
@@ -143,7 +149,14 @@ def register(request):
 		
 	elif request.method == 'GET':
 		return render(request,'register.html')
-		
+
+
+def deletecontent(request,id):
+	getcourse=Course.objects.filter(id=id)
+	getcourse.delete()
+	return HttpResponse('Deleted :)')
+
+
 
 def logout(request):
     request.session.flush()

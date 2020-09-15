@@ -3,6 +3,40 @@
 {% block content %}
 <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 <div class="container mt-4">
+<!-- Image Upload modal -->
+<div class="modal fade" id="imageupload" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose an image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/uploadprofilepic" enctype="multipart/form-data">
+      	 {% csrf_token %}
+	      <div class="modal-body">
+		       <div class="input-group">
+				  <div class="custom-file">
+				    <input type="file" name="image">
+				   </div>
+				  
+				</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" name="imgupload" class="btn btn-primary">Upload</button></a>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 
 		<!-- Modal -->
 		<div class="modal fade" id="editprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -38,11 +72,17 @@
 
 	
 	{%for x in userdet%}
-	<div class="card mx-auto " style="width: 18rem;">
+	<div class="card mx-auto border border-primary rounded-bottom " style="width: 18rem;padding: 10px;
+  		box-shadow: 1px 10px 5px 1px #888888;font-family: 'Roboto Condensed', sans-serif;">
 	  <img class="card-img-top" src="{{x.image.url}}" alt="Card image cap " style="width: 100%;height: 200px">
 	  <div class="card-body">
-	    <h5 class="card-title">Name:{{x.firstname}}</h5>
-	    <p class="card-text">Data to be added</p>
+	    <h5 class="card-title">Name:{{x.firstname }} {{ x.lastname}}</h5>
+	    <p class="card-text">
+	    	
+	    	<a href="/uploadprofilepic"> Change Profile Picture
+	     	<i class="fas fa-camera" style="background-color: white;" data-toggle="modal" data-target="#imageupload" onclick="abc();"></i>
+	     	</a>
+	    </p>
 	  </div>
 	  <ul class="list-group list-group-flush">
 	    <li class="list-group-item">Email: {{x.email}}</li>
