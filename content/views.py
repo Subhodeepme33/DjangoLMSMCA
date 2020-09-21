@@ -3,10 +3,11 @@ from root.models.CourseModel import Course
 from root.models.ContentModel import Content
 from root.models.CategoryModel import Category
 from root.models.SubscriptionModel import Subscription
+from root.models.Review import Review
 from django.http import HttpResponse
 from datetime import datetime
 
-
+ 
 
 def contentcreate(request):
 	if request.method == 'POST':
@@ -14,14 +15,22 @@ def contentcreate(request):
 		ccat=request.POST['category']
 		createdby=request.session.get('user')
 		createdat=datetime.now()
-		course=Course(coursename=cname,coursecategory=ccat,createdby=createdby,createdat=createdat)
-		course.save()
-		getcourseid=Course.objects.values_list('id',flat=True).get(coursename=cname)
-		
-		userid=request.session.get('id')
-		request.session['activecourse']=getcourseid
-		request.session['activecoursename']=cname
-		return render(request,'continuecreate.html',{'c':course})
+		cimage=request.FILES['courseimage']
+		if Course.objects.filter(coursename=cname):
+			error="Coursename is taken , use different"
+			category=Category.objects.all()
+			data={}
+			data['cat']=category
+			data['err']=error
+			return render(request,'contentcreate.html',data)
+		else:
+			course=Course(coursename=cname,coursecategory=ccat,createdby=createdby,createdat=createdat,courseimage=cimage)
+			course.save()
+			getcourseid=Course.objects.values_list('id',flat=True).get(coursename=cname)
+			userid=request.session.get('id')
+			request.session['activecourse']=getcourseid
+			request.session['activecoursename']=cname
+			return render(request,'continuecreate.html',{'c':course})
 		
 	elif request.method == 'GET':
 		category=Category.objects.all()
@@ -47,8 +56,21 @@ def fetchcontent(request,id,uid):
 
 def showcontent(request,id,uid):
 	getpost=Content.objects.filter(cuid=uid)
-	return render(request,'displaycontent.html',{'dt':getpost})
+	data={}
+	comments=Review.objects.filter(courseuid=uid)
+	data['dt']=getpost
+	data['comment']=comments
+	return render(request,'displaycontent.html',data)
 
+def comment(request,uid):
+	comment=request.POST['comment']
+	print("Data is cominggggg")
+	print(comment)
+	user=request.session.get('user')
+	cid=str(uid)
+	comment=Review(comment=comment,username=user,courseuid=cid)
+	comment.save()
+	return HttpResponse('Comment Added')
 
 def continuecreate(request):
 
@@ -138,18 +160,10 @@ def viewmycontent(request,id):
 	getuser=request.session.get('user')
 	getcuid=Course.objects.values_list('courseuid',flat=True).get(id=id)
 	fetchcontent=Content.objects.filter(cuid=getcuid)
-	#fetchcourses=Course.objects.filter(createdby=getuser)
 	return render(request,'mycreationsview.html',{'data':fetchcontent})
-'''
-def deletecontent(request,id):
-	getcourse=Course.objects.filter(id=id)
-	getcourse.delete()
-	return HttpResponse('Deleted :)')
-'''
 
 
 def displaymycontent(request,id):
 	getcontent=Content.objects.filter(id=id)
+
 	return render(request,'fetchcontent.html',{'c':getcontent})
-
-

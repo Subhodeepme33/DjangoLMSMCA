@@ -5,6 +5,7 @@ from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('adminarea/',include('adminarea.urls')),
     path('',include('root.urls')),
     path('content/',include('content.urls')),
 

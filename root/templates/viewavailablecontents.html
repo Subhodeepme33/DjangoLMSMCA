@@ -6,23 +6,25 @@
 				
 				<div class="container-fluid col-md-12" style="font-family: 'Roboto Condensed', sans-serif;">
 					<!-- Available courses -->
-					<h1 style="font-family: 'Roboto Condensed', sans-serif;"> You are viewing all the courses which are currently available </h1>
+					<h1 class="mx-auto"style="font-family: 'Roboto Condensed', sans-serif;"> You are viewing all the courses which are currently available </h1>
 					
 					{% for x in allcourses%}
 					
 					<div class="card mr-5 mt-5 ml-5" style=" display: inline; float: left;">
-					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">
+					  <img src="{{ x.courseimage.url }}"  class="card-img-top" style="height: 200px;width: 200px">
 					  <div class="card-body">
 					    <h5 class="card-title">{{ x.id }}</h5>
 					    <p class="card-text">{{ x.coursename }}</p>
-					    <a href="{% url 'showcontent' x.id x.courseuid %}" class="btn btn-primary">View Course</a>	
+					    <a href="{% url 'showcontent' x.id x.courseuid %}" class="btn btn-sm btn-primary mx-auto mr-3">View Course</a>	
 						    
 
-						    <a href="{% url 'enrollcourse' x.id x.courseuid %}" class="btn btn-primary">Enroll</a>					  	
-						  	
+						    <a href="{% url 'enrollcourse' x.id x.courseuid %}" class="btn btn-sm btn-primary  mx-auto">Enroll</a>					  	
+						<button type="button" class="btn btn-primary btn-sm btn-block mt-3 mx-auto">Buy Course</button>  	
 					  </div>
 					</div>
 					
 					{% endfor %}
 				</div>
+
 {%endblock%}
+

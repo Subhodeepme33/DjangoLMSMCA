@@ -3,13 +3,16 @@
 {%block content%}
 {%load static%}
 
-
-
 <div class="container-fluid" style="font-family: 'Roboto Condensed', sans-serif;">
-  
-
-			<div class="container col-md-12">
+  			<div class="container col-md-12">
 					<!-- Available courses -->
+					{% if not dt %}
+						<div class="alert alert-info mt-3" role="alert">
+							  No data available for now :)
+						</div>
+					{%endif%}
+
+
 					{% for x in dt%}
 					<div class="card" style="width: 18rem; display: inline; float: left;">
 					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">
@@ -22,10 +25,38 @@
 					</div>
 					{% endfor %}
 			</div>
-  
+		<footer>
+		<div class="container-fluid col-sm-6 mt-4 p-4" style="margin-top: 50px">
+			
+		   {% for x in dt %}
+		   {%if forloop.first %}
+		   <form action="{% url 'comment' x.cuid %}" method="POST" >
+		   	{% csrf_token %}
+		   <textarea class="form-control mb-3 border border-primary rounded" name="comment" rows="2" cols="4" placeholder="Write your comment..."></textarea>
+		   <a href="#"></a><button type="submit" class="btn btn-primary mt-3 mb-3">Comment</button></a>
+		   </form>
+		   {%endif%}
+		   {%endfor%}
+		</div>
+			<div class="container-fluid col-sm-6 mt-4 p-4" class="border border-success">
+				User Reviews:
+				<br>
+				{%for x in comment %}
+					{{ x.username }}
+					<div class="alert alert-success" role="alert">
+					  {{ x.comment }} 
+					</div>
+				{%endfor%}
+			</div>
 
-  </div>
+
+
+		</footer>
+ 	 </div>
+
 </div>
+
+
 
 
 {%endblock%}

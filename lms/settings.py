@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'root',
     'content',
     'embed_video',
+    'chartjs',
+    'adminarea',
 ]
 
 MIDDLEWARE = [

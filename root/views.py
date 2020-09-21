@@ -3,13 +3,13 @@ from .models.UserModel import Users
 from .models.ContentModel import Content
 from .models.CourseModel import Course
 from .models.SubscriptionModel import Subscription
+from .models.Review import Review
+from .models.CategoryModel import Category
 from django.http import HttpResponse
 
  
 def home(request):
 	return render(request,'login.html')
-
-
 
 def userhome(request):
 	if request.method == 'POST':
@@ -46,17 +46,58 @@ def userhome(request):
 			data['course']=course
 			return render(request,'homepage.html',data)
 	
-'''
-def showenrollments(request,id,uid):
-	
+
+def showenrollments(request):
 	if request.method == 'GET':
-		#useruid=
 		userid=request.session.get('id')
 		enrolledcourses=Subscription.objects.filter(userid=userid)
-		return render(request,'enrollment.html',{'enrolled':enrolledcourses})'''
+		return render(request,'enrollment.html',{'enrolled':enrolledcourses})
 
 
-#Show the content that is created by a teacher/admin
+def ratings(request):
+	category=Category.objects.all()
+	data={}
+	data['category']=category
+	return render(request,'ratings.html',data)
+
+def showchart(request):
+	category=request.POST['cat']
+	getcourse=Course.objects.filter(coursecategory=category)	
+	labels=[]
+	data=[]
+	for x in getcourse:
+		cname=x.coursename
+		getcoursecuid=Course.objects.values_list('courseuid',flat=True).get(coursename=cname)
+		cuid=str(getcoursecuid)
+		totalcomments=Review.objects.filter(courseuid=cuid).count()
+		graphdata.add(cname,totalcomments)
+	
+
+	items = graphdata.items() 
+	for item in items:
+		labels.append(item[0]),data.append(item[1])
+	
+	graphdata.clear()
+	return render(request,'graph.html',{
+		'labels':labels,
+		'data':data,
+		})	
+
+
+class my_dictionary(dict): 
+  
+    def __init__(self): 
+        self = dict() 
+          
+    def add(self, key, value): 
+        self[key] = value 
+  
+
+graphdata = my_dictionary() 
+  
+
+
+
 def mycontentshow(request,id,uid):
 	useractiveid=request.session.get('id') #3
 	useractivename=request.session.get('user') #nkar
@@ -67,8 +108,8 @@ def mycontentshow(request,id,uid):
 
 
 def profiledetails(request,id,uid):
-	finduser=Users.objects.filter(id=id)
-	return render(request,'myprofile.html',{'userdet':finduser})
+	user=Users.objects.filter(id=id)
+	return render(request,'myprofile.html',{'userdet':user})
 
 
 def editprofile(request,id,uid):
@@ -79,7 +120,7 @@ def editprofile(request,id,uid):
  
 	x.save()
 	return HttpResponse('Data Saved')
-
+ 
 #Needs to be workedon
 def viewavailablecontents(request):
 	if request.session.get('user') is not None:
@@ -100,16 +141,29 @@ def enrollcourse(request,id,uid):
 	userid=request.session.get('id')
 	username=Users.objects.values_list('username',flat=True).get(id=userid)
 	subscription=Subscription.objects.filter(userid=userid)
-	#Condition checking if a user is already enrolled or not. If yes throw an erri
-	#Implement the code
-	subscribe=Subscription(courseid=courseid,userid=userid,coursename=coursename,username=username,isenrolled=True)
-	subscribe.save()
-	return render(request,'homepage.html')
+	print("HEYYYYY")
+	response=False
+	for x in subscription:
+		if courseid == x.courseid:
+			response=True
 
+	if response == True:
+		return HttpResponse('<script>alert("You are already enrolled in this course.Choose else.") </script>')
+	else:
+		subscribe=Subscription(courseid=courseid,userid=userid,coursename=coursename,username=username,isenrolled=True)
+		subscribe.save()
+		if 'user' in request.session and 'id' in request.session:
+			uname=request.session.get('user')
+			course=Course.objects.all()
+			userdata=Users.objects.filter(username=uname)
+			data={}
+			data['data']=userdata
+			data['course']=course
+			return render(request,'homepage.html',data)
 
 
 def profilepicchange(request):
-	pic = request.FILES['image']
+	pic = request.FILES['profilepic']
 	uname=request.session.get('user')
 
 	userData=Users.objects.filter(username=uname)
@@ -152,9 +206,13 @@ def register(request):
 
 
 def deletecontent(request,id):
+
 	getcourse=Course.objects.filter(id=id)
+	getcourseuid=Course.objects.values_list('courseuid',flat=True).get(id=id)
+	fetchallcontentforthecourse=Content.objects.filter(cuid=getcourseuid)
+	fetchallcontentforthecourse.delete()
 	getcourse.delete()
-	return HttpResponse('Deleted :)')
+	return HttpResponse('<script>alert("Content is deleted"); window.history.back(); location.reload(true);  </script>')
 
 
 

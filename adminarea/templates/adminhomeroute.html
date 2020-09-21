@@ -1,0 +1,26 @@
+{%extends 'adminbase.html'%}
+
+{%block content%}
+<div class="ui grid">
+		<div class="three column row">
+			<div class="column">
+			</div>
+			<div class="column">
+				<form class="ui form" method="POST" action="/adminarea/adminlogin">
+					{%csrf_token%}
+				  <div class="field">
+				    <label>Username</label>
+				    <input type="text"  name="auname" placeholder="Enter Username">
+				  </div>
+				  <div class="field">
+				    <label>Password</label>
+				    <input type="text" name="aupass" placeholder="Password">
+				  </div>
+				  <div class="field">
+				  	  <button class="ui primary button" type="submit">Login</button>
+				</form>
+			</div>
+		</div>
+</div>
+
+{%endblock%}

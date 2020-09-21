@@ -12,11 +12,11 @@
 					  <div class="card-body">
 					    <h5 class="card-title">{{ x.id }}</h5>
 					    <p class="card-text">{{ x.coursename }}</p>
-					    <a href="{% url 'showcontent' x.id x.courseuid %}" class="btn btn-primary">View Course</a>	
-						<a href="{% url 'enrollcourse' x.id x.courseuid %}" class="btn btn-primary">Enroll</a>		  							  	
+					    <a href="{% url 'showcontent' x.id x.courseid %}" class="btn btn-primary">View Course</a>		  							  	
 					  </div>
 					</div>
 					
 					{% endfor %}
 				</div>
+
 {%endblock%}

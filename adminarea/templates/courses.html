@@ -1,0 +1,43 @@
+{%extends 'adminbase.html' %}
+
+
+{%block content%}
+
+
+<div class="content">
+	<table class="ui teal table ui inverted teal table">
+  <thead>
+    <tr>
+      <th>CourseID</th>
+      <th>CourseName</th>
+      <th>CourseCategory</th>
+      <th>CreatedBy</th>
+      <th>ModifyCourse</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for x in data %}
+    <tr>
+      <td>{{x.id}}</td>
+      <td>{{x.coursename}}</td>
+      <td>{{x.coursecategory}}</td>
+      <td>{{x.createdat}}</td>
+      <td>
+      	<div class="ui buttons">
+		 <a href=""> <button class="ui positive button">Edit</button> </a>
+		  <div class="or"></div>
+		<a href="">  <button class="negative ui button">Delete</button> </a>
+		</div>
+      </td>
+    </tr>
+    {%endfor%}
+
+  </tbody>
+  <tfoot class="full-width">
+ 
+  </tfoot>
+</table>
+</div>
+
+
+{%endblock%}
