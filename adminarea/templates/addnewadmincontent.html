@@ -1,0 +1,28 @@
+{%extends 'adminbase.html' %}
+{%load static%}
+{%block content%}
+<div class="ui container segment">
+  <label style="margin-bottom:20px ">Edit your Contents:</label>
+<form class="ui form" method="POST" action="{%url 'saveeditcontent' x.id %}">
+  {% csrf_token %}
+  <div class="field">
+    <label>Content heading</label>
+    <input type="text" name="nch" placeholder="Enter NA if no change required">
+  </div>
+  <div class="field">
+    <label>Content URL</label>
+    <input type="text" name="ncu" placeholder="Enter NA if no change required">
+  </div>
+ <div class="field">
+    <label>Content Body</label>
+    <input type="text" name="ncb" placeholder="Enter NA if no change required">
+  </div>
+
+  <button class="ui primary button" type="submit">Submit</button>
+</form>
+</div>
+
+
+
+
+{%endblock%}

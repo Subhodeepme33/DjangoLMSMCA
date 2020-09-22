@@ -46,6 +46,36 @@ def courses(request):
 		courses=Course.objects.all()
 		return render(request,'courses.html',{'data':courses})
 
+def content(request):
+	if 'user' in request.session:
+		content=Content.objects.all()
+		return render(request,'content.html',{'data':content})
+
+
+def addnewadmincontent(request):
+	return render(request,'addnewadmincontent.html')
+
+def editadmincontent(request,id):
+	content=Content.objects.filter(id=id)
+	return render(request,'editadmincontent.html',{'data':content})
+
+#Remove code repetition by combining them	
+def saveeditcontent(request,id):
+	content=Content.objects.filter(id=id)
+	if request.method == 'POST':
+		newheading=request.POST['nch']
+		newurl=request.POST['ncu']
+		newbody=request.POST['ncb']
+
+		for x in content:
+			x.contentheading= newheading
+			x.contenturl = newurl
+			x.contentbody= newbody
+		x.save()
+		
+	return HttpResponse('<script>alert("Data updated successfully" )</script>')	
+
+
 
 
 def logout(request):

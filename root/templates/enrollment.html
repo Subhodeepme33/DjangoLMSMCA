@@ -6,6 +6,15 @@
 </center>
 				<div class="container col-md-12" style="font-family: 'Roboto Condensed', sans-serif;">
 					<!-- Available courses -->
+					{%if not enrolled%}
+					<center>
+					<div class="alert alert-info" role="alert">
+						Sorry,:( 
+						<br>
+						Currently you are not enrolled in any course!
+					</div>
+					</center>
+					{%endif%}
 					{% for x in enrolled %}					
 					<div class="card z-depth-4 mr-5 mt-5 ml-5" style="width: 18rem; display: inline; float: left;">
 					  <img src="https://picsum.photos/200" class="card-img-top" style="height: 100px;width: 200px">

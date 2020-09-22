@@ -13,8 +13,9 @@
 					<div class="card mr-5 mt-5 ml-5" style=" display: inline; float: left;">
 					  <img src="{{ x.courseimage.url }}"  class="card-img-top" style="height: 200px;width: 200px">
 					  <div class="card-body">
-					    <h5 class="card-title">{{ x.id }}</h5>
-					    <p class="card-text">{{ x.coursename }}</p>
+					    <h5 class="card-title">CourseID: {{ x.id }}</h5>
+					    <p class="card-text">CourseName: {{ x.coursename }}</p>
+					    <p class="card-text">Created By: {{ x.createdby }}</p>
 					    <a href="{% url 'showcontent' x.id x.courseuid %}" class="btn btn-sm btn-primary mx-auto mr-3">View Course</a>	
 						    
 

@@ -1,6 +1,13 @@
 {%extends 'adminbase.html'%}
-
+{%load static%}
 {%block content%}
+
+<div>
+	<center>
+	<img src="{% static 'images/background.png' %}">
+	</center>
+</div>
+
 <div class="ui grid">
 		<div class="three column row">
 			<div class="column">
@@ -22,5 +29,4 @@
 			</div>
 		</div>
 </div>
-
 {%endblock%}

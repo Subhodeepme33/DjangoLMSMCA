@@ -165,7 +165,6 @@ def enrollcourse(request,id,uid):
 def profilepicchange(request):
 	pic = request.FILES['profilepic']
 	uname=request.session.get('user')
-
 	userData=Users.objects.filter(username=uname)
 	for x in userData:
 		x.image=pic

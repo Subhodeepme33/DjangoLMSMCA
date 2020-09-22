@@ -7,7 +7,7 @@ from root.models.Review import Review
 from django.http import HttpResponse
 from datetime import datetime
 
- 
+  
 
 def contentcreate(request):
 	if request.method == 'POST':
@@ -56,6 +56,8 @@ def fetchcontent(request,id,uid):
 
 def showcontent(request,id,uid):
 	getpost=Content.objects.filter(cuid=uid)
+	print("HEY DEBUGGING HERE")
+	print(getpost)
 	data={}
 	comments=Review.objects.filter(courseuid=uid)
 	data['dt']=getpost

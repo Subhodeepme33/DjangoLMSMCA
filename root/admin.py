@@ -4,6 +4,8 @@ from .models.CourseModel import Course
 from .models.ContentModel import Content
 from .models.SubscriptionModel import Subscription
 from .models.CategoryModel import Category
+from embed_video.admin import AdminVideoMixin
+
 
 class UsersAdmin(admin.ModelAdmin):
 	list_display=['firstname','lastname','username','email','useruid']
@@ -17,8 +19,11 @@ class CourseAdmin(admin.ModelAdmin):
 	def __str__(self):
 		return str(self.courseuid)
 
-class ContentAdmin(admin.ModelAdmin):
+class ContentAdmin(AdminVideoMixin,admin.ModelAdmin):
 	list_display=['contentheading']
+
+	def __str__(self):
+		return str(self.cuid)
 
 class SubscriptionAdmin(admin.ModelAdmin):
 	list_display =[ 'coursename' , 'username']

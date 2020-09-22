@@ -1,0 +1,58 @@
+{%extends 'adminbase.html' %}
+{%load static%}
+{%block content%}
+
+<div class="content" style="margin:20px">
+	<table class="ui teal table ui inverted teal table">
+  <thead>
+    <tr>
+      <th>ContentID</th>
+      <th>Contentheading</th>
+      <th>Contentbody</th>
+      <th>Contenturl</th>
+      <th>Createdby</th>
+      <th>Modify</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for x in data %}
+    <tr>
+      <td>{{x.id}}</td>
+      <td>{{x.contentheading |truncatechars:50  }}</td>
+      <td>{{x.contentbody|truncatechars:50 }}</td>
+      <td>{{x.contenturl |truncatechars:10  }}</td>
+      <td>{{x.createdby}}</td>
+      <td>
+      <div class="ui buttons">
+      <a href="{%url 'editadmincontent' x.id%}">
+		  <button class="ui positive button test" >Edit</button> </a>
+		  <div class="or">
+		<a href="">  <button class="negative ui button">Delete</button> </a>
+		</div>
+      </td>
+    </tr>
+   {%endfor%}
+
+  </tbody>
+  <tfoot class="full-width">
+ 
+  </tfoot>
+</table>
+ <a href="/adminarea/addnewadmincontent">
+  <div class="ui teal labeled icon button" style="margin: 20px;">
+    Add new content
+    <i class="add icon"></i>
+  </div>
+  </a>
+
+</div>
+
+ 
+
+
+<script>
+
+
+</script>
+
+{%endblock%}
