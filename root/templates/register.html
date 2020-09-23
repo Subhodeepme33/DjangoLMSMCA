@@ -7,34 +7,59 @@
     <div class="col">
     	<h1 class="col-md-6 mb-4"> Registration </h1>
 		 
-		 <form id="register" enctype="multipart/form-data">
+		 <form id="register" action="">
 		 	{% csrf_token %}
 
 		  <div class="form-row">
 		    <div class="form-group col-md-6">
 		      <label>Firstname</label>
 		      <input type="text" name="fname" id="fname" class="form-control" placeholder="Enter your firstname">
+		      {%if fname%}
+			     <div class="alert alert-danger" role="alert">
+					  {{ fname }}
+				</div>
+		      {%endif%}
 		    </div>
 		    <div class="form-group col-md-6">
 		      <label>Lastname</label>
 		      <input type="text" name="lname" id="lname" class="form-control" placeholder="Enter your lastname">
+		      {%if lname%}
+			     <div class="alert alert-danger" role="alert">
+					  {{ lname }}
+				</div>
+		      {%endif%}
 		    </div>
 		  </div>
 
 		  <div class="form-group">
 		    <label>Email</label>
 		    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+		    {%if email%}
+			     <div class="alert alert-danger" role="alert">
+					  {{ email }}
+				</div>
+		      {%endif%}
 		  </div>
 
 		  <div class="form-group">
 		    <label>Username</label>
 		    <input type="text" class="form-control" id="uname" name="uname"  placeholder="Enter username">
+		      {%if uname%}
+			     <div class="alert alert-danger" role="alert">
+					  {{ uname }}
+				</div>
+		      {%endif%}
 		  </div>
 
 		  <div class="form-row">
 			    <div class="form-group col-md-6">
 			      <label for="inputEmail4">Password</label>
 			      <input type="password" name="passwd" id="passwd" class="form-control" placeholder="Enter a password">
+			   {%if pass%}
+			     <div class="alert alert-danger" role="alert">
+					  {{ pass }}
+				</div>
+		      {%endif%}
 			    </div>
 			    <div class="form-group col-md-6">
 			      <label>Confirm Password</label>

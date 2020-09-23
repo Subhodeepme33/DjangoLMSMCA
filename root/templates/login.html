@@ -13,6 +13,12 @@
     	</center>
     	</div>
     	<div class="form" style="opacity: 1;">
+    		{%if err %}
+    		<div class="alert alert-danger" role="alert">
+			  {{ err }}
+			</div>
+
+    		{%endif%}
 	      	<form action="/userhome" method="POST">
 			 {% csrf_token %}
 

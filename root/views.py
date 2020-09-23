@@ -6,7 +6,7 @@ from .models.SubscriptionModel import Subscription
 from .models.Review import Review
 from .models.CategoryModel import Category
 from django.http import HttpResponse
-
+from django.http import JsonResponse
  
 def home(request):
 	return render(request,'login.html')
@@ -19,21 +19,25 @@ def userhome(request):
 		course=Course.objects.all()
 		userid=request.session.get('id')
 		enrolledcourses=Subscription.objects.filter(userid=userid)
-		
-
-		if finduser:
-			
+		for x in finduser:
+			status=x.useractive
+	
+		if finduser and status == 1:			
 			user_id=Users.objects.values_list('id',flat=True).get(username=uname)
 			request.session['user']=uname
 			request.session['id']=user_id
 			userdata=Users.objects.filter(username=uname)
 			data={}
 			data['data']=userdata
-			data['course']=course
-			
+			data['course']=course			
 			return render(request,'homepage.html',data)
+
+		elif finduser and status == 0:
+			err="Your account is suspended. Contact Adminstrator"
+			return render(request,'login.html',{'err':err})
+		
 		else:
-			return HttpResponse('User not found')
+			return HttpResponse('<script>alert("User not found")</script>')
 
 	
 	elif request.method == 'GET':
@@ -141,7 +145,6 @@ def enrollcourse(request,id,uid):
 	userid=request.session.get('id')
 	username=Users.objects.values_list('username',flat=True).get(id=userid)
 	subscription=Subscription.objects.filter(userid=userid)
-	print("HEYYYYY")
 	response=False
 	for x in subscription:
 		if courseid == x.courseid:
@@ -183,22 +186,44 @@ def register(request):
 		passwd= request.POST['passwd']
 		confpas= request.POST['confpas']
 		getusertype=request.POST['choice']
-		
 		if getusertype == 'Teacher':
 			setusertype="tch"
 		else:
 			setusertype="stu"
-
+		err={}
 		if passwd == confpas:
 			users=Users()
-			users.firstname=fname
-			users.lastname=lname
-			users.username=uname
-			users.email=email
-			users.password=passwd
-			users.usertype=setusertype
+
+			if fname is None or fname in ['test','abc','hi','hello']:
+				err['fname']="Please enter a valid firstname"
+			else:
+				users.firstname=fname.lower()
+
+			if lname is None or lname in ['test','abc','hi','hello']:
+				err['lname']="Please enter a valid Lastname"
+			else:
+				users.lastname=lname.lower()
+
+			if uname is None:
+				err['uname']="Enter a valid username "
+			else:
+				users.username=uname.lower()
+			if email is None:
+				err['email']="Enter a valid email "
+			else:
+				users.email=email.lower()	
+			if len(passwd) < 8:	
+				err['pass']="Length of password must be 8 characters"
+			else:
+				users.password=passwd.lower()
+			users.usertype=setusertype.lower()
+		
+		if not err:	
 			users.save()
-			return HttpResponse('Data Saved')
+			return HttpResponse('True')
+		else:
+			print(err)
+			return render(request,'register.html',{'err':err})
 		
 	elif request.method == 'GET':
 		return render(request,'register.html')

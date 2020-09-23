@@ -32,6 +32,8 @@ def adminlogin(request):
 			data['category']=category
 			data['content']=content
 			data['courses']=courses
+			admindet=User.objects.filter(id=user.id)
+			data['admindet']=admindet
 			return render(request,'adminhome.html',data)
 	else:
 		return HttpResponse('usernot found')
@@ -52,14 +54,53 @@ def content(request):
 		return render(request,'content.html',{'data':content})
 
 
-def addnewadmincontent(request):
-	return render(request,'addnewadmincontent.html')
+def subscription(request):
+	if 'user' in request.session:
+		subscription=Subscription.objects.all()
+		return render(request,'subscriptions.html',{'data':subscription})
+
+
+
+def comments(request):
+	if 'user' in request.session:
+		comment= Review.objects.all()
+		print(comment)
+		return render(request,'reviews.html',{'data':comment})
+
+
+def suspenduser(request,id):
+	user=Users.objects.filter(id=id)
+	for x in user:
+ 		x.useractive=0
+ 		x.save()
+
+ 		users=Users.objects.all()
+ 		return render(request,'users.html',{'data':users})
+
+
+def activateuser(request,id):
+	user=Users.objects.filter(id=id)
+	for x in user:
+ 		x.useractive=1
+ 		x.save()
+
+ 		users=Users.objects.all()
+ 		return render(request,'users.html',{'data':users})
+ 	
+ 	
+def deletecomment(request,id):
+	comment=Review.objects.filter(id=id)
+	comment.delete()
+	return HttpResponse('<script>alert("Comment Deleted successfully") window.history.back(); </script>')
+
+
 
 def editadmincontent(request,id):
 	content=Content.objects.filter(id=id)
 	return render(request,'editadmincontent.html',{'data':content})
 
-#Remove code repetition by combining them	
+#Remove code repetition by combining them
+
 def saveeditcontent(request,id):
 	content=Content.objects.filter(id=id)
 	if request.method == 'POST':
@@ -76,6 +117,10 @@ def saveeditcontent(request,id):
 	return HttpResponse('<script>alert("Data updated successfully" )</script>')	
 
 
+def deleteadmincontent(request,id):
+	fetch=Content.objects.filter(id=id)
+	fetch.delete()
+	return HttpResponse('<script>alert("Data deleted successfully" )</script>')
 
 
 def logout(request):

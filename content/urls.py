@@ -15,7 +15,11 @@ urlpatterns = [
     re_path(r'^addnew/(?P<uid>[0-9a-f-]+)/$', views.addnew,name='addnew'),
     re_path(r'^comment/(?P<uid>[0-9a-f-]+)/$', views.comment,name='comment'),
     re_path(r'^showcontent/(?P<id>\w+)/(?P<uid>[0-9a-f-]+)/$', views.showcontent,name='showcontent'),
+
+    re_path(r'^showenrolledcontent/(?P<id>\w+)/(?P<cid>[0-9a-f-]+)/$', views.showenrolledcontent,name='showenrolledcontent'),
+    
     re_path(r'^fetchcontent/(?P<id>\w+)/(?P<uid>[0-9a-f-]+)/$', views.fetchcontent,name='fetchcontent'),
+    
     path('viewcontinuecreate',views.viewcontinuecreate),
     
  ]

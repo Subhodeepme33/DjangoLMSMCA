@@ -5,6 +5,7 @@
 {%for x in data%}
 <div class="ui container segment">
   <label style="margin-bottom:20px ">Edit your Contents:</label>
+  
 <form class="ui form" method="POST" action="{%url 'saveeditcontent' x.id %}">
   {% csrf_token %}
   <div class="field">

@@ -11,6 +11,7 @@ class Users(models.Model):
 	useruid=models.UUIDField(default=uuid.uuid4, editable=False)
 	usertype=models.CharField(max_length=5)
 	image=models.ImageField(upload_to='uploads/profilepics',blank=True)
+	useractive=models.IntegerField(default=1)
 
 	class Meta:
 		db_table="users"

@@ -1,9 +1,32 @@
 {%extends 'adminbase.html' %}
-
+{%load static%}
 {%block content%}
 <div class="ui grid">
   <div class="three column row">
-    <div class="column">Admin Details and Navigation will go here</div>
+    <div class="column">
+    	<div class="content" style="margin:20px">
+			<div class="ui card">
+			  <div class="image">
+			    <img src="{% static 'images/profileavatar.jpg' %}">
+			  </div>
+			  <div class="content">
+			  	{%for x in admindet%}
+			    <a class="header">{{x.username}}</a>
+			    <div class="meta">
+			      <span class="date"></span>
+			    </div>
+			    <div class="description">
+			     Content Manager
+			    </div>
+			  </div>
+			  <div class="extra content">
+			    
+			  </div>
+			  {%endfor%}
+			</div>
+		</div>
+
+    </div>
     <div class="column">
     	<div class="content" style="float: left;display: inline;">
 				
@@ -27,6 +50,30 @@
 				    </a>
 				  </div>
 				</div>  
+
+				<div class="ui card">
+				  <div class="image">
+				    <i class="fas fa-database"></i>
+				  </div>
+				  <div class="content">
+				    <a class="header">User Reviews</a>
+				    <div class="meta">
+				      <span class="date">Created At data</span>
+				    </div>
+				    <div class="description">
+				      This table contains all user activity data.
+				    </div>
+				  </div>
+				  <div class="extra content">
+				    <a href="/adminarea/comments">
+				      <button class="ui blue button">View</button>
+				    </a>
+				  </div>
+				</div>  
+
+
+
+
 				<div class="ui card">
 				  <div class="image">
 				    <i class="fas fa-database"></i>
@@ -41,7 +88,7 @@
 				    </div>
 				  </div>
 				  <div class="extra content">
-				    <a>
+				    <a href="/adminarea/subscription">
 				      <button class="ui blue button">View</button>
 				    </a>
 				  </div>
@@ -84,6 +131,7 @@
 				    </a>
 				  </div>
 				</div>  
+
 
 
 		</div>

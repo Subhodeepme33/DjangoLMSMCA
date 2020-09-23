@@ -1,0 +1,49 @@
+{%extends 'adminbase.html' %}
+
+
+{%block content%}
+
+
+<div class="content" style="margin:20px">
+  <center>
+    <h3>Subscription Status</h3>
+  </center>
+
+	<table class="ui teal table ui inverted teal table">
+  <thead>
+    <tr>
+      <th>CourseName</th>
+      <th>Username</th>
+      <th>Userid</th>
+      <th>Courseid</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+
+  	{% for x in data %}
+    <tr>
+      <td>{{x.coursename}}</td>
+      <td>{{x.username}}</td>
+      <td>{{x.userid}}</td>
+      <td>{{x.courseid}}</td>
+    </tr>
+    {%endfor%}
+
+  </tbody>
+  <tfoot class="full-width">
+
+  </tfoot>
+</table>
+</div>
+ {% if not data %}
+      <div class="ui positive message">
+        <i class="close icon"></i>
+        <div class="header">
+          Currently,there are no subscription details available.
+        </div>
+        
+      </div>
+    {%endif%}
+
+{%endblock%}

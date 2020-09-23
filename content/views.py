@@ -7,7 +7,7 @@ from root.models.Review import Review
 from django.http import HttpResponse
 from datetime import datetime
 
-  
+   
 
 def contentcreate(request):
 	if request.method == 'POST':
@@ -56,18 +56,27 @@ def fetchcontent(request,id,uid):
 
 def showcontent(request,id,uid):
 	getpost=Content.objects.filter(cuid=uid)
-	print("HEY DEBUGGING HERE")
-	print(getpost)
 	data={}
 	comments=Review.objects.filter(courseuid=uid)
 	data['dt']=getpost
 	data['comment']=comments
 	return render(request,'displaycontent.html',data)
 
+
+def showenrolledcontent(request,id,cid):
+	cuid=Course.objects.values_list('courseuid',flat=True).get(id=cid)
+	getpost=Content.objects.filter(cuid=str(cuid))
+	data={}
+	comments=Review.objects.filter(courseuid=cuid)
+	data['dt']=getpost
+	data['comment']=comments
+	return render(request,'displaycontent.html',data)
+
+
+
+
 def comment(request,uid):
 	comment=request.POST['comment']
-	print("Data is cominggggg")
-	print(comment)
 	user=request.session.get('user')
 	cid=str(uid)
 	comment=Review(comment=comment,username=user,courseuid=cid)

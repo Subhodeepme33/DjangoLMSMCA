@@ -4,7 +4,7 @@
 {%block content%}
 
 
-<div class="content">
+<div class="content" style="margin:20px">
 	<table class="ui teal table ui inverted teal table">
   <thead>
     <tr>
@@ -27,11 +27,32 @@
       <td>{{x.email}}</td>
       <td>{{x.password}}</td>
       <td>
-      	<div class="ui buttons">
-		 <a href=""> <button class="ui positive button">Edit</button> </a>
-		  <div class="or"></div>
-		<a href="">  <button class="negative ui button">Delete</button> </a>
-		</div>
+      <div class="ui buttons">
+  		  <a href=""> <button class="ui positive button">Edit</button> </a>
+  		  <div class="or"></div>
+  		  {%if x.useractive == 1%}
+        <a href="{% url 'suspenduser' x.id %}">  
+        <button class="negative ui button">Suspend</button> 
+        </a>
+        {%endif%}
+        {%if x.useractive == 0 %}
+        <button class="ui disabled button">
+          <i class="user icon"></i>
+          User Disabled
+        </button>
+        {%endif%}
+
+        {%if x.useractive == 0 %}
+        <a href="{% url 'activateuser' x.id %}">
+          <button class="ui primary button">
+            Reactivate 
+          </button>
+         </a> 
+        {%endif%}         
+
+
+
+		  </div>
       </td>
     </tr>
     {%endfor%}

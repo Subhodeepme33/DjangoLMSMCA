@@ -4,7 +4,7 @@
 {%block content%}
 
 
-<div class="content">
+<div class="content" style="margin:20px">
 	<table class="ui teal table ui inverted teal table">
   <thead>
     <tr>
@@ -12,7 +12,6 @@
       <th>CourseName</th>
       <th>CourseCategory</th>
       <th>CreatedBy</th>
-      <th>ModifyCourse</th>
     </tr>
   </thead>
   <tbody>
@@ -22,13 +21,6 @@
       <td>{{x.coursename}}</td>
       <td>{{x.coursecategory}}</td>
       <td>{{x.createdat}}</td>
-      <td>
-      	<div class="ui buttons">
-		 <a href=""> <button class="ui positive button">Edit</button> </a>
-		  <div class="or"></div>
-		<a href="">  <button class="negative ui button">Delete</button> </a>
-		</div>
-      </td>
     </tr>
     {%endfor%}
 

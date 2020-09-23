@@ -1,0 +1,60 @@
+{%extends 'adminbase.html' %}
+
+
+{%block content%}
+
+
+<div class="content" style="margin:20px">
+  <center>
+    <h3>Subscription Status</h3>
+  </center>
+
+	<table class="ui teal table ui inverted teal table">
+  <thead>
+    <tr>
+      <th>Comment</th>
+      <th>Commented By</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+
+  	{% for x in data %}
+    <tr>
+      <td>{{x.comment}}</td>
+      <td>{{x.username}}</td>
+      <td>
+      <div class="ui buttons">
+      <a href="{% url 'deletecomment' x.id %}">
+      <button class="negative ui button"  >Delete Comment</button> </a>
+      </div>
+      </td>
+    </tr>
+    {%endfor%}
+
+  </tbody>
+  <tfoot class="full-width">
+
+  </tfoot>
+</table>
+</div>
+      <div class="content" style="margin:20px">
+        {% if not data %}
+        <div class="ui positive message">
+          <i class="close icon"></i>
+          <div class="header">
+            Currently,there are no comments.
+          </div>
+          
+        </div>
+        {%endif%}
+      </div>
+<script>
+  function rfrsh(){
+    alert("Function running")
+    
+  }
+</script>
+
+{%endblock%}
